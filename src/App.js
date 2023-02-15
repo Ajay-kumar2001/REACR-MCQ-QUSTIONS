@@ -1,7 +1,9 @@
 
 
 import { useState } from "react";
+import Loginpage from "./loginpage";
 import Qustions from "./Qustions";
+import Buttons from "./Buttons";
 function App() {
   let arr=[{id:1,qn:"1. A person crosses a 600 m long street in 5 minutes. What is his speed in km per hour?",op1:"3.6",op2:"8.6",op3:"4.6",op4:"10"},
   {id:2,qn:"2. An aeroplane covers a certain distance at a speed of 240 kmph in 5 hours. To cover the same distance in 1 2/3 hours, it must travel at a speed of?",op1:"300kmph",op2:"360kmph",op3:"600kmph",op4:"720kmph"},
@@ -14,12 +16,40 @@ function App() {
   {id:9,qn:"9. The speed of a car increases by 2 kms after every one hour. If the distance travelling in the first one hour was 35 kms. what was the total distance travelled in 12 hours?",op1:"456km",op2:"558km",op3:"482kk",op4:"552km"},
   {id:10,qn:"10. A runner can complete a 750 m race in two and a half minutes. Will he be able to beat another runner who runs at 17.95 km/hr?",op1:"YES",op2:"No",op3:"Insufficein Data",op4:"None"}]
   let [data,setAns]=useState({})
+  let [fdata,fset]=useState({})
+  // let ansArr=[]
   let fun=(e)=>{setAns({...data,[e.target.name]:e.target.value})}
-  console.log(data)
+  
+  let fvalue=(e)=>{fset({...fdata,[e.target.type]:e.target.value})}
+console.log(fdata)
+  let ok=()=>{ 
+    let phon=fdata.text
+    let re=/^[6/7/9][0-9]{9}$/
+    let mail=fdata.email
+    let re1=/^\w{2,}[@]{1}[.]{1}$/
+    localStorage.setItem("phono",phon)
+    localStorage.setItem("emailid",mail)
+    if((re1.test(mail)) &(re.test(phon))){
+      alert("start the Exam")
+    }
+    else{
+      alert("enter valid details")
+    }
+  
+  }
+  
   return (
-    
     <div>
-      {arr.map((item,index)=><Qustions data={item} key={index} fun={fun}/>)}
+      <div>
+        <Loginpage fvalue={fvalue} ok={ok}/>
+      </div>
+      <div>
+        <Buttons />
+        <div>
+        {arr.map((item,index)=><Qustions data={item} key={index} fun={fun} />)}
+        </div>
+    </div>
+    {/* <button onChange={submit}> submit</button> */}
     </div>
   );
 }
